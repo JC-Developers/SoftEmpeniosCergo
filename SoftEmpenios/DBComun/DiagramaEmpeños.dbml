@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SoftEmpeños" Class="EmpeñosDC" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=jonadab8-lap;Initial Catalog=SoftEmpeños;Integrated Security=True" SettingsObjectName="SoftEmpenios.Properties.Settings" SettingsPropertyName="SoftEmpeñosConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Articulos" Member="Articulos">
+    <Type Name="Articulo">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Peso" Type="System.Decimal" DbType="Decimal(18,1) NOT NULL" CanBeNull="false" />
+      <Column Name="Kilates" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Precio" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PrecioCredito" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaRegistro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Articulo_DetalleVenta" Member="DetalleVentas" ThisKey="Clave" OtherKey="CveArticulo" Type="DetalleVenta" />
+      <Association Name="Usuario_Articulo" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ventas" Member="Ventas">
+    <Type Name="Venta">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cliente" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaVenta" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TotalVenta" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Enganche" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Saldo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoVenta" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Venta_DetalleVenta" Member="DetalleVentas" ThisKey="Clave" OtherKey="CveVenta" Type="DetalleVenta" />
+      <Association Name="Venta_PagosVenta" Member="PagosVentas" ThisKey="Clave" OtherKey="CveVenta" Type="PagosVenta" />
+      <Association Name="Usuario_Venta" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Boletas" Member="Boletas">
+    <Type Name="Boleta">
+      <Column Name="IDBoleta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cliente" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Cotitular" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="FechaPrestamo" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Articulos" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Prestamo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PesoEmpeño" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoEmpeño" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Interes" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Pagado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPago" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EstadoBoleta" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Folio" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Boleta_Desempeño" Member="Desempeños" ThisKey="Folio" OtherKey="FolioBoleta" Type="Desempeño" />
+      <Association Name="Boleta_DetallesBoleta" Member="DetallesBoletas" ThisKey="Folio" OtherKey="Folio" Type="DetallesBoleta" />
+      <Association Name="Boleta_PagosIntere" Member="PagosInteres" ThisKey="Folio" OtherKey="FolioBoleta" Type="PagosIntere" />
+      <Association Name="Usuario_Boleta" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cajas" Member="Cajas">
+    <Type Name="Caja">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CajaInicial" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CajeroCerro" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CajeroAbrio" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCajaAbierto" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCajaCierre" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Desempenios" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="InteresCobrados" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalEmpenios" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalDepositos" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRetiros" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalCompras" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalVentas" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPagosVentas" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalFinanciamientos" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalEnganche" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPagosFinanciamiento" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CajaFinal" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cancelaciones" Member="Cancelaciones">
+    <Type Name="Cancelacione">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveCancelada" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCancelacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TipoCancelacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CajeroCancelo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Cancelacione_Usuario" Member="Usuarios" ThisKey="CajeroCancelo" OtherKey="CveUsuario" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Clientes" Member="Clientes">
+    <Type Name="Cliente">
+      <Column Name="CveCliente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Poblacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="Cliente_Prestamo" Member="Prestamos" ThisKey="CveCliente" OtherKey="CveCliente" Type="Prestamo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Compras" Member="Compras">
+    <Type Name="Compra">
+      <Column Name="CveCompra" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalCompra" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCompra" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Compra_DetallesCompra" Member="DetallesCompras" ThisKey="CveCompra" OtherKey="CveCompra" Type="DetallesCompra" />
+      <Association Name="Usuario_Compra" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Configuraciones" Member="Configuraciones">
+    <Type Name="Configuracione">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NombreEmpresa" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RazonSocial" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RFC" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CURP" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoPostal" Type="System.String" DbType="NChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="Municipio" Type="System.String" DbType="NChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="PorcentajeInteres" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PorcentajeRecargo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="DiasVencimiento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Proroga" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PrecioCompraDolar" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VencimientoApartado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaUltimaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Desempeños" Member="Desempeños">
+    <Type Name="Desempeño">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FolioBoleta" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="InteresTotal" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Recargos" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="DiasRecargo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RecargoxDia" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPagar" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaDesempeño" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MesesPagados" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Boleta_Desempeño" Member="Boleta" ThisKey="FolioBoleta" OtherKey="Folio" Type="Boleta" IsForeignKey="true" />
+      <Association Name="Usuario_Desempeño" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetalleReferenciasPrestamos" Member="DetalleReferenciasPrestamos">
+    <Type Name="DetalleReferenciasPrestamo">
+      <Column Name="CvePrestamo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CveReferencia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Prestamo_DetalleReferenciasPrestamo" Member="Prestamo" ThisKey="CvePrestamo" OtherKey="Clave" Type="Prestamo" IsForeignKey="true" />
+      <Association Name="Referencia_DetalleReferenciasPrestamo" Member="Referencia" ThisKey="CveReferencia" OtherKey="CveReferencia" Type="Referencia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetallesBoletas" Member="DetallesBoletas">
+    <Type Name="DetallesBoleta">
+      <Column Name="Folio" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CvePrenda" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Boleta_DetallesBoleta" Member="Boleta" ThisKey="Folio" OtherKey="Folio" Type="Boleta" IsForeignKey="true" />
+      <Association Name="Prenda_DetallesBoleta" Member="Prenda" ThisKey="CvePrenda" OtherKey="Clave" Type="Prenda" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetallesCompras" Member="DetallesCompras">
+    <Type Name="DetallesCompra">
+      <Column Name="CveArticulo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveCompra" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PesoCantidad" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PrecioCompra" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPrecioArticulo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TipodeCompra" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Association Name="Compra_DetallesCompra" Member="Compra" ThisKey="CveCompra" OtherKey="CveCompra" Type="Compra" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetalleVentas" Member="DetalleVentas">
+    <Type Name="DetalleVenta">
+      <Column Name="CveVenta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CveArticulo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PrecioCompra" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Articulo_DetalleVenta" Member="Articulo" ThisKey="CveArticulo" OtherKey="Clave" Type="Articulo" IsForeignKey="true" />
+      <Association Name="Venta_DetalleVenta" Member="Venta" ThisKey="CveVenta" OtherKey="Clave" Type="Venta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Financiamientos" Member="Financiamientos">
+    <Type Name="Financiamiento">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Interes" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="Prorroga" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Recargo" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="Enganche" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="Vencimiento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Financiamiento_Prestamo" Member="Prestamos" ThisKey="Clave" OtherKey="CveTipoFinancimiento" Type="Prestamo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Horarios" Member="Horarios">
+    <Type Name="Horario">
+      <Column Name="Numero" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Dia" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HoraInicial" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="HoraFinal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PagosFinanciamientos" Member="PagosFinanciamientos">
+    <Type Name="PagosFinanciamiento">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CvePrestamo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Interes" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Recargo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="AbonoPrestamo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPago" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPago" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Prestamo_PagosFinanciamiento" Member="Prestamo" ThisKey="CvePrestamo" OtherKey="Clave" Type="Prestamo" IsForeignKey="true" />
+      <Association Name="Usuario_PagosFinanciamiento" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PagosInteres" Member="PagosInteres">
+    <Type Name="PagosIntere">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FolioBoleta" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="NumPago" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPago" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Interes" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Recargos" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="DiasRecargo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RecargoXDia" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPagar" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MesPagado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Boleta_PagosIntere" Member="Boleta" ThisKey="FolioBoleta" OtherKey="Folio" Type="Boleta" IsForeignKey="true" />
+      <Association Name="Usuario_PagosIntere" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PagosVentas" Member="PagosVentas">
+    <Type Name="PagosVenta">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveVenta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Abono" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Saldo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPago" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Venta_PagosVenta" Member="Venta" ThisKey="CveVenta" OtherKey="Clave" Type="Venta" IsForeignKey="true" />
+      <Association Name="Usuario_PagosVenta" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Precios" Member="Precios">
+    <Type Name="Precio">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Empeño" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Compra" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VentaContado" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VentaApartado" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UltimaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prendas" Member="Prendas">
+    <Type Name="Prenda">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Peso" Type="System.Decimal" DbType="Decimal(18,1) NOT NULL" CanBeNull="false" />
+      <Column Name="Avaluo" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Association Name="Prenda_DetallesBoleta" Member="DetallesBoletas" ThisKey="Clave" OtherKey="CvePrenda" Type="DetallesBoleta" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prestamos" Member="Prestamos">
+    <Type Name="Prestamo">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CveTipoFinancimiento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FolioFinanciamiento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Enganche" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Saldo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPrestamo" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Observacion" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Interes" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Recargo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Meses" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Prestamo_DetalleReferenciasPrestamo" Member="DetalleReferenciasPrestamos" ThisKey="Clave" OtherKey="CvePrestamo" Type="DetalleReferenciasPrestamo" />
+      <Association Name="Prestamo_PagosFinanciamiento" Member="PagosFinanciamientos" ThisKey="Clave" OtherKey="CvePrestamo" Type="PagosFinanciamiento" />
+      <Association Name="Cliente_Prestamo" Member="Cliente" ThisKey="CveCliente" OtherKey="CveCliente" Type="Cliente" IsForeignKey="true" />
+      <Association Name="Financiamiento_Prestamo" Member="Financiamiento" ThisKey="CveTipoFinancimiento" OtherKey="Clave" Type="Financiamiento" IsForeignKey="true" />
+      <Association Name="Usuario_Prestamo" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Referencias" Member="Referencias">
+    <Type Name="Referencia">
+      <Column Name="CveReferencia" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Poblacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="Referencia_DetalleReferenciasPrestamo" Member="DetalleReferenciasPrestamos" ThisKey="CveReferencia" OtherKey="CveReferencia" Type="DetalleReferenciasPrestamo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transacciones" Member="Transacciones">
+    <Type Name="Transaccione">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TipoTransaccion" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Concepto" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaTransaccion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_Transaccione" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuarios" Member="Usuarios">
+    <Type Name="Usuario">
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Usuario" Member="Usuario1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Contrasenia" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Permisos" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_Articulo" Member="Articulos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Articulo" />
+      <Association Name="Usuario_Venta" Member="Ventas" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Venta" />
+      <Association Name="Usuario_Boleta" Member="Boletas" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Boleta" />
+      <Association Name="Usuario_Compra" Member="Compras" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Compra" />
+      <Association Name="Usuario_Desempeño" Member="Desempeños" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Desempeño" />
+      <Association Name="Usuario_PagosFinanciamiento" Member="PagosFinanciamientos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="PagosFinanciamiento" />
+      <Association Name="Usuario_PagosIntere" Member="PagosInteres" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="PagosIntere" />
+      <Association Name="Usuario_PagosVenta" Member="PagosVentas" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="PagosVenta" />
+      <Association Name="Usuario_Prestamo" Member="Prestamos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Prestamo" />
+      <Association Name="Usuario_Transaccione" Member="Transacciones" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Transaccione" />
+      <Association Name="Usuario_FinancieraGrupo" Member="FinancieraGrupos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="FinancieraGrupo" />
+      <Association Name="Usuario_FinancieraPago" Member="FinancieraPagos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="FinancieraPago" />
+      <Association Name="Usuario_FinancieraCredito" Member="FinancieraCreditos" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="FinancieraCredito" />
+      <Association Name="Cancelacione_Usuario" Member="Cancelacione" ThisKey="CveUsuario" OtherKey="CajeroCancelo" Type="Cancelacione" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinancieraGrupos" Member="FinancieraGrupos">
+    <Type Name="FinancieraGrupo">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FinancieraGrupo_FinancieraGruposDetalle" Member="FinancieraGruposDetalles" ThisKey="Clave" OtherKey="CveGrupo" Type="FinancieraGruposDetalle" />
+      <Association Name="FinancieraGrupo_FinancieraCredito" Member="FinancieraCreditos" ThisKey="Clave" OtherKey="CveGrupo" Type="FinancieraCredito" />
+      <Association Name="Usuario_FinancieraGrupo" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinancieraClientes" Member="FinancieraClientes">
+    <Type Name="FinancieraCliente">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Ingresos" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Domicilio" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Poblacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="EstadoCivil" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Conyuge" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="CelularConyuge" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="IngresosConyuge" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="FinancieraCliente_FinancieraGruposDetalle" Member="FinancieraGruposDetalles" ThisKey="Clave" OtherKey="CveCliente" Type="FinancieraGruposDetalle" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinancieraGruposDetalles" Member="FinancieraGruposDetalles">
+    <Type Name="FinancieraGruposDetalle">
+      <Column Name="CveGrupo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CveCliente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Solicitado" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Aprobado" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Base" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="FinancieraCliente_FinancieraGruposDetalle" Member="FinancieraCliente" ThisKey="CveCliente" OtherKey="Clave" Type="FinancieraCliente" IsForeignKey="true" />
+      <Association Name="FinancieraGrupo_FinancieraGruposDetalle" Member="FinancieraGrupo" ThisKey="CveGrupo" OtherKey="Clave" Type="FinancieraGrupo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinancieraPagos" Member="FinancieraPagos">
+    <Type Name="FinancieraPago">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveCredito" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pago" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Recargo" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPago" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPago" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_FinancieraPago" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="FinancieraCredito_FinancieraPago" Member="FinancieraCredito" ThisKey="CveCredito" OtherKey="Clave" Type="FinancieraCredito" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinancieraCreditos" Member="FinancieraCreditos">
+    <Type Name="FinancieraCredito">
+      <Column Name="Clave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CveGrupo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaInicio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaFinal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Prestamo" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="TotalPago" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Pago" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="SaldoActual" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Plazos" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumeroPlazos" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CveUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Base" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="FechaModificacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="FinancieraCredito_FinancieraPago" Member="FinancieraPagos" ThisKey="Clave" OtherKey="CveCredito" Type="FinancieraPago" />
+      <Association Name="FinancieraGrupo_FinancieraCredito" Member="FinancieraGrupo" ThisKey="CveGrupo" OtherKey="Clave" Type="FinancieraGrupo" IsForeignKey="true" />
+      <Association Name="Usuario_FinancieraCredito" Member="Usuario" ThisKey="CveUsuario" OtherKey="CveUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

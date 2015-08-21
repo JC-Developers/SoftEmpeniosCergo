@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftEmpenios", "SoftEmpenios\SoftEmpenios.csproj", "{0FE9BEF9-1211-491F-8F54-0C3340456CC7}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupSofEmpenios", "SetupSofEmpenios\SetupSofEmpenios.vdproj", "{7F2B2BAC-F9B9-4404-9BF6-7DD458FE38CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FE9BEF9-1211-491F-8F54-0C3340456CC7}.Debug|x86.ActiveCfg = Debug|x86
+		{0FE9BEF9-1211-491F-8F54-0C3340456CC7}.Debug|x86.Build.0 = Debug|x86
+		{0FE9BEF9-1211-491F-8F54-0C3340456CC7}.Release|x86.ActiveCfg = Debug|x86
+		{0FE9BEF9-1211-491F-8F54-0C3340456CC7}.Release|x86.Build.0 = Debug|x86
+		{7F2B2BAC-F9B9-4404-9BF6-7DD458FE38CD}.Debug|x86.ActiveCfg = Debug
+		{7F2B2BAC-F9B9-4404-9BF6-7DD458FE38CD}.Release|x86.ActiveCfg = Debug
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
