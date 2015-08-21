@@ -24,7 +24,7 @@ namespace SoftEmpenios
             thread.Start();
             Thread.Sleep(5000);
             thread.Abort();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var configuracion = new clsModificarConfiguracion();
